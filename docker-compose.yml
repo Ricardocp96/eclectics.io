@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  nestapp:
+    container_name: nestapp
+    image: francescoxx/nestapp:1.0.0
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - DB_TYPE=postgres
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres
+      - PG_DB=Ekazi
+      - PG_PORT=5444
+      - PG_HOST=db
+    depends_on:
+      - interview
+      
+  interview:
+    container_name: interview
+    image: postgres:12
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  
+
+volumes:
+  pgdata: {}
